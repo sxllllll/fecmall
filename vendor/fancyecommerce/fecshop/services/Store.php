@@ -230,7 +230,7 @@ class Store extends Service
         $init_complete = 0;
         if (is_array($stores) && !empty($stores)) {
             foreach ($stores as $store_code => $store) {
-                if ($host[1] == $store_code) {
+//                if ($host[1] == $store_code) {
                     $this->html5DeviceCheckAndRedirect($store_code, $store);
                     Yii::$service->store->currentStore = $store_code;
                     $this->store = $store;
@@ -281,7 +281,7 @@ class Store extends Service
                                 }
                             }
                         }
-                    }
+//                    }
                     
                     break;
                 }

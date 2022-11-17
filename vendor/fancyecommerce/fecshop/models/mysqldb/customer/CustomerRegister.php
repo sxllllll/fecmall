@@ -43,7 +43,7 @@ class CustomerRegister extends Customer
              // 注册账户，名字不作为必填选项
             ['lastname', 'filter', 'filter' => 'trim'],
             // ['lastname', 'string', 'length' => [1, 50]],
-            
+
             ['is_subscribed', 'validateIsSubscribed'],
         ];
 
@@ -104,7 +104,7 @@ class CustomerRegister extends Customer
         if (!$this->access_token) {
             $this->generateAccessToken();
         }
-        
+
         // 设置password
         $this->setPassword($this->password);
         return parent::save($runValidation, $attributeNames);

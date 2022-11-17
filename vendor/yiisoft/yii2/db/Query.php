@@ -283,7 +283,7 @@ class Query extends Component implements QueryInterface, ExpressionInterface
         if ($this->emulateExecution) {
             return false;
         }
-
+//        var_dump( $this->createCommand($db)->getRawSql());
         return $this->createCommand($db)->queryOne();
     }
 

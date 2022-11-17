@@ -24,6 +24,7 @@ class LoginController extends AppserverController
      * 登录用户的部分
      */
     public function actionAccount(){
+
         if(Yii::$app->request->getMethod() === 'OPTIONS'){
             return [];
         }
@@ -78,7 +79,7 @@ class LoginController extends AppserverController
         $accessToken = Yii::$service->customer->loginAndGetAccessToken($email,$password);
         if($accessToken){
             $code = Yii::$service->helper->appserver->status_success;
-            $data = [];
+            $data = ["access-token" => $accessToken];
             $responseData = Yii::$service->helper->appserver->getResponseData($code, $data);
             
             return $responseData;

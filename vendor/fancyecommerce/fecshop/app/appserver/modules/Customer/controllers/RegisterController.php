@@ -86,7 +86,7 @@ class RegisterController extends AppserverController
         } elseif (strlen($firstname) < $minNameLength || strlen($firstname) > $maxNameLength) {
             $errorArr[] = 'firstname must >= '.$minPassLength.' and <= '.$maxPassLength;
         } elseif (strlen($lastname) < $minNameLength || strlen($lastname) > $maxNameLength) {
-            $errorArr[] = 'lastname must >= '.$minPassLength.' and <= '.$maxPassLength;
+//            $errorArr[] = 'lastname must >= '.$minPassLength.' and <= '.$maxPassLength;
         }
         if (!empty($errorArr)) {
             return implode(',',$errorArr);
