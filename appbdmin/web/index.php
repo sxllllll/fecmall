@@ -1,7 +1,9 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_COMPILE_WARNING ); //除去 E_NOTICE E_COMPILE_WARNING 之外的所有错误信息
 #ini_set('session.cookie_domain', '.fancyecommerce.com'); //初始化域名，
-$http = ($_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
+//$http = ($_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
+$http = $_SERVER["HTTP_X_FORWARDED_PROTO"] ?: 'http';
+
 $homeUrl = $http.'://'.$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['SCRIPT_NAME']), '\\/');
 
 defined('YII_DEBUG') or define('YII_DEBUG', true);
