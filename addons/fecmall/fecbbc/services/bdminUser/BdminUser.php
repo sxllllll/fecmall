@@ -106,6 +106,17 @@ class BdminUser extends Service
         
         return null;
     }
+
+    public function getInfo(int $id = 0 ){
+        return $this->_model->findById($id);
+    }
+
+    public function save(int $id , $data ){
+        $this->_model->attributes = $data;
+        return $this->_model->saveData($id);
+
+    }
+
     /*
      * example filter:
      * [
@@ -320,8 +331,7 @@ class BdminUser extends Service
         
         $model = new $this->_userApplyFormModel();
         $model->created_at = time();
-        
-        
+
         // 属性验证
         $model->attributes = $param;
         if (!$model->validate()) {  

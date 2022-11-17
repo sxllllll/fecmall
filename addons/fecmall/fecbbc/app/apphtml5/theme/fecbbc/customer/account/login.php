@@ -26,7 +26,7 @@ if (isWechat) {
             <div class="form-group mobile">
                 <label for="mobile" class="iconfont">&#xe636;
                 </label>
-                <input id="phone" type="text" name="editForm[phone]" placeholder="<?= Yii::$service->page->translate->__('Phone'); ?>" class="verify-code-input" value="<?= $phone; ?>">
+                <input id="phone" type="text" name="editForm[email]" placeholder="<?= Yii::$service->page->translate->__('Email'); ?>" class="verify-code-input" value="<?= $phone; ?>">
             </div>
             <div class="form-group verify-code">
                 <label for="verifyCode" class="iconfont">&#xe723;</label>

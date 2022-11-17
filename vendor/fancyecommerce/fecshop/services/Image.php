@@ -226,6 +226,7 @@ class Image extends Service
     {
         $arr = explode('.', $name);
         $fileType = '.'.$arr[count($arr)-1];
+
         // 密码字符集，可任意添加你需要的字符
         $chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         $str ='';
@@ -237,7 +238,6 @@ class Image extends Service
             $str .= $chars[ mt_rand(0, strlen($chars) - 1) ];
         }
         $str .= time();
-        
         return $str.$fileType;
     }
     
@@ -312,6 +312,7 @@ class Image extends Service
         $file = $FILE['tmp_name'];
         $name = $FILE['name'];
         $newName = $this->generateImgName($name);
+
         if (!$newName) {
             throw new InvalidValueException('generate img name fail');
         }

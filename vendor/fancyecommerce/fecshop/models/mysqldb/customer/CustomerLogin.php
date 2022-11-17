@@ -72,6 +72,7 @@ class CustomerLogin extends Model
                 $duration = Yii::$service->session->timeout;
             }
         }
+
         if ($this->validate()) {
             return \Yii::$app->user->login($this->getCustomer(), $duration);
         } else {

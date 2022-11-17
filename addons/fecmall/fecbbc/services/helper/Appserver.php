@@ -33,8 +33,11 @@ class Appserver extends \fecshop\services\helper\Appserver
     public $customer_order_return_qty_limit = 2000011; 
     public $customer_order_return_submit_fail = 2000012; 
     public $customer_order_return_cancel = 2000013; 
-    public $customer_order_return_dispatch_fail = 2000014; 
-    
+    public $customer_order_return_dispatch_fail = 2000014;
+    public $customer_apply_seller_fail = 2000015;
+    public $customer_reapply_seller = 2000016;
+
+
     public function getMessageArr()
     {
         $arr = parent::getMessageArr();
@@ -52,7 +55,9 @@ class Appserver extends \fecshop\services\helper\Appserver
         $arr[$this->customer_order_return_submit_fail] = [  'message' => 'customer order return submit fail' ];
         $arr[$this->customer_order_return_cancel] = [  'message' => 'customer order return cancel' ];
         $arr[$this->customer_order_return_dispatch_fail] = [  'message' => 'customer order return dispatch fail' ];
-        
+        $arr[$this->customer_apply_seller_fail] = [  'message' => 'customer apply failed' ]; // 商家申请失败
+        $arr[$this->customer_reapply_seller] = [  'message' => 'customer already applied ' ]; // 商家重复申请
+
         return $arr;
     }
     

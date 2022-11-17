@@ -32,5 +32,15 @@ class BdminUser extends \fecshop\models\mysqldb\AdminUser
         return '{{%bdmin_user}}';
     }
 
-    
-}    
+    public function findById( int $cid = 0 ){
+        return static::find()->where( [ "cid"=> $cid ] )->one();
+    }
+
+    public function saveData( int $id ){
+        if( $id > 0) {
+            return $this->update();
+        }else{
+            return $this->insert();
+        }
+    }
+}

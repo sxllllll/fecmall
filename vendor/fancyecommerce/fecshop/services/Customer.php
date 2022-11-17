@@ -170,6 +170,7 @@ class Customer extends Service
         $model->password = $data['password'];
         $model->email = $data['email'];
         $loginStatus = $model->login();
+
         $errors = $model->errors;
         if (empty($errors)) {
             // 合并购物车数据

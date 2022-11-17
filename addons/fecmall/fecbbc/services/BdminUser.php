@@ -24,6 +24,16 @@ class BdminUser extends \fecshop\services\Service
 
     }
 
+    // 是否存在申请信息
+    public function isApply( int $id ){
+        return Yii::$service->bdminUser->bdminUser->getInfo( $id );
+    }
+
+    // 申请
+    public function save( int $id , $data){
+        return Yii::$service->bdminUser->bdminUser->save( $id , $data );
+    }
+
     /**
      * @param $data|array
      * 数组格式：['username'=>'xxx@xxx.com','password'=>'xxxx']

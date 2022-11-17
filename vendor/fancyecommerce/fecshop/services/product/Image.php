@@ -129,6 +129,7 @@ class Image extends Service
      */
     public function saveProductUploadImg($FILE)
     {
+
         Yii::$service->image->imageFloder = $this->imageFloder;
         Yii::$service->image->allowImgType = $this->allowImgType;
         if ($this->maxUploadMSize) {

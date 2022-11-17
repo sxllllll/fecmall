@@ -46,7 +46,6 @@ class Manageredit extends AppadminbaseBlockEdit implements AppadminbaseBlockEdit
     {
         $request_param = CRequest::param();
         $this->_param = $request_param[$this->_editFormData];
-        
         $this->_service->save($this->_param);
         $errors = Yii::$service->helper->errors->get();
         if (!$errors) {

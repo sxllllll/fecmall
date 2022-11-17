@@ -30,6 +30,7 @@ class Login
     public function login($param)
     {
         if (is_array($param) && !empty($param)) {
+
             Yii::$service->customer->login($param);
         }
         Yii::$service->page->message->addByHelperErrors();

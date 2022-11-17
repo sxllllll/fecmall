@@ -140,9 +140,9 @@ class AppbdminController extends Controller
         $viewId = str_replace('/', '\\', $viewId);
         $relativeFile = '\\'.$this->blockNamespace;
         $relativeFile .= '\\'.$viewId.'\\'.ucfirst($blockName);
+
         //查找是否在rewriteMap中存在重写
         $relativeFile = Yii::mapGetName($relativeFile);
-
         return new $relativeFile();
 
     }

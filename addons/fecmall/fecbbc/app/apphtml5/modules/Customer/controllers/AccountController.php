@@ -135,9 +135,8 @@ class AccountController extends \fecshop\app\apphtml5\modules\Customer\controlle
             Yii::$service->customer->setLoginSuccessRedirectUrl($redirectUrl);
         }
         $param = Yii::$app->request->post('editForm');
-        //var_dump($param);exit;
+//        var_dump($param);exit;
         if (!empty($param) && is_array($param)) {
-            
             $this->getBlock()->login($param);
             if (!Yii::$app->user->isGuest) {
                 return Yii::$service->customer->loginSuccessRedirect('customer/account');

@@ -197,9 +197,8 @@ class Manager extends AppadminbaseBlock implements AppadminbaseBlockInterface
         if (is_array($searchArr) && !empty($searchArr)) {
             $where = $this->initDataWhere($searchArr);
         }
-        $where[] = ['not', ['audit_at' => null]]; 
-        
-        
+        $where[] = [ 'not', [ 'audit_at' => null ] ];
+
         //var_dump($where);
         $filter = [
             'numPerPage'    => $this->_param['numPerPage'],
