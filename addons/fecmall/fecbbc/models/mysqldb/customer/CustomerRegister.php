@@ -36,7 +36,6 @@ class CustomerRegister extends Customer
 //            ['phone','match','pattern'=>'/^[1][23456789][0-9]{9}$/'],
 //            ['phone', 'validatePhone'],
             ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'email'],
             ['email', 'validateEmail'],
             ['password', 'filter', 'filter' => 'trim'],
             ['password', 'string', 'length' => [6, 30]],
