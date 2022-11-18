@@ -396,7 +396,7 @@ class Customer extends \fecshop\services\Customer
                 $access_token_created_at = $identity->access_token_created_at;
                 $timeout = Yii::$service->session->timeout;
                 if ($access_token_created_at + $timeout > time()) {
-                    return $accessToken;
+                    return ["token"=> $identity->access_token , "id"=> $identity->id];
                 }
             }
         }
@@ -414,7 +414,7 @@ class Customer extends \fecshop\services\Customer
             // 执行购物车合并等操作。
             Yii::$service->cart->mergeCartAfterUserLogin();
             $this->setHeaderAccessToken($identity->access_token);
-            return $identity->access_token;
+            return ["token"=> $identity->access_token , "id"=> $identity->id];
         }
     }
     

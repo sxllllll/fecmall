@@ -36,6 +36,8 @@ class Appserver extends \fecshop\services\helper\Appserver
     public $customer_order_return_dispatch_fail = 2000014;
     public $customer_apply_seller_fail = 2000015;
     public $customer_reapply_seller = 2000016;
+    public $customer_invalid_userid = 2000017;  // 无效用户id
+    public $db_op_failed = 2000018;  // 数据操作失败
 
 
     public function getMessageArr()
@@ -57,8 +59,63 @@ class Appserver extends \fecshop\services\helper\Appserver
         $arr[$this->customer_order_return_dispatch_fail] = [  'message' => 'customer order return dispatch fail' ];
         $arr[$this->customer_apply_seller_fail] = [  'message' => 'customer apply failed' ]; // 商家申请失败
         $arr[$this->customer_reapply_seller] = [  'message' => 'customer already applied ' ]; // 商家重复申请
+        $arr[$this->customer_invalid_userid] = [  'message' => 'invalid userid ' ]; // 无效用户id
+        $arr[$this->db_op_failed] = [  'message' => 'data operation failed' ]; //  数据操作失败
 
         return $arr;
     }
-    
+
+    /**
+     * 无效 Token
+     */
+    public function invalid_token(){
+        $code = $this->account_no_login_or_login_token_timeout;
+        $message = $this->getMessageByCode($code);
+        return [
+            'code'    => $code,
+            'message' => $message,
+            'data'    => '',
+        ];
+    }
+
+    /**
+     * 成功
+     */
+    public function success($data){
+        $code = $this->status_success;
+        $message = $this->getMessageByCode($code);
+        return [
+            'code'    => $code,
+            'message' => $message,
+            'data'    => $data,
+        ];
+    }
+
+    /**
+     * 无效参数
+     */
+    public function invalid_params(string $field = ""){
+        $code = $this->status_invalid_param;
+        $message = $this->getMessageByCode($code);
+        return [
+            'code'    => $code,
+            'message' => $message,
+            'data'    => ["invalid params" => $field] ,
+        ];
+    }
+
+    /**
+     * 操作数据库失败
+     */
+    public function db_failed ( $data = [] ){
+        $code = $this->db_op_failed;
+        $message = $this->getMessageByCode($code);
+        return [
+            'code'    => $code,
+            'message' => $message,
+            'data'    => $data  ,
+        ];
+    }
+
+
 }

@@ -33,7 +33,7 @@ class BdminUser extends \fecshop\models\mysqldb\AdminUser
     }
 
     public function findById( int $cid = 0 ){
-        return static::find()->where( [ "cid"=> $cid ] )->one();
+        return static::find()->select("username,cid,email,id_front,id_back,telephone,address,is_audit,audit_at,remark")->where( [ "cid"=> $cid ] )->one();
     }
 
     public function saveData( int $id ){

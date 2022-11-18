@@ -22,6 +22,10 @@ use Yii;
  */
 class AccountController extends AppserverTokenController
 {
+    /**
+     * 申请商家类型通知
+     */
+    const APPLY_SELLER_NOTICE_TYPE = 100;
     
     public function actionIndex(){
         if(Yii::$app->request->getMethod() === 'OPTIONS'){
@@ -63,7 +67,6 @@ class AccountController extends AppserverTokenController
      */
     public function actionApplySeller(){
         $param = Yii::$app->getRequest()->post();
-
         $header = Yii::$app->request->getHeaders();
         $code = Yii::$service->helper->appserver->status_success;
         $data = [];
@@ -82,7 +85,7 @@ class AccountController extends AppserverTokenController
 
         if( empty( $seller ) || $seller["is_audit"] == 3 ) {  // 未申请或已拒绝申请 可提交
             $param["audit_at"] = time(); // 审核时间
-            $param["is_audit"] = 1; // 申请中
+            $param["is_audit"] = 2; // 申请中
             $param["cid"] = $identity["id"]; // 用户id
             $param["tax_point"] = 1;
             $param["email"] = $identity["email"];
@@ -90,13 +93,20 @@ class AccountController extends AppserverTokenController
             $save = $model->saveData( $seller["id"] ?? 0  );
             if( !$save ) {
                 $code = Yii::$service->helper->appserver->customer_apply_seller_fail;
-                return Yii::$service->helper->appserver->getResponseData($code, $data);
+                return Yii::$service->helper->appserver->getResponseData($code, $param);
             }
+            // 加入通知
+            $notice = [
+                "type" => self::APPLY_SELLER_NOTICE_TYPE,
+                "progress" => 2,
+                "to_id" =>  $identity["id"] ,
+            ];
+            Yii::$service->notices->insert($notice);
             return Yii::$service->helper->appserver->getResponseData($code, $data);
         }
 
         $code = Yii::$service->helper->appserver->customer_reapply_seller;
-        return Yii::$service->helper->appserver->getResponseData($code, $data);
+        return Yii::$service->helper->appserver->getResponseData($code, $seller);
     }
 
     /**
@@ -122,7 +132,42 @@ class AccountController extends AppserverTokenController
         }
         return $info;
     }
-    
+
+    /**
+     * 获取通知信息
+     */
+    public function actionNotices (){
+        $header = Yii::$app->request->getHeaders();
+        if ( !( isset($header['access-token']) && $header['access-token'] ) ) {
+            return Yii::$service->helper->appserver->invalid_token();
+        }
+        $id = Yii::$app->cache->get($header['access-token']);
+        if( empty($id) ) {
+            $code = Yii::$service->helper->appserver->customer_invalid_userid;
+            return Yii::$service->helper->appserver->getResponseData( $code , [] );
+        }
+        $params = Yii::$app->request->get();
+        $page = $params["page"] ?? 1 ;
+        if ( $page <= 0 ) $page = 1;
+        $data = Yii::$service->notices->getNotices( $id , intval( $params["type"] ?? 0 ) , intval( $page ) ,intval( $params["pagesize"] ?? 15 ) );
+        return Yii::$service->helper->appserver->success( $data );
+    }
+
+    /**
+     * 设置通知查看状态
+     */
+    public function actionNoticeRead(){
+        $id = Yii::$app->request->get("id" , 0);
+        if ( empty($id) ) {
+            return Yii::$service->helper->appserver->invalid_params("id");
+        }
+        $save = Yii::$service->notices->updateInRead( $id );
+        if ( empty( $save ) ) {
+            return Yii::$service->helper->appserver->db_failed();
+        }
+        return Yii::$service->helper->appserver->success();
+    }
+
     public function getLeftMenu()
     {
         $leftMenu = \Yii::$app->getModule('customer')->params['leftMenu'];

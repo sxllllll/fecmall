@@ -26,6 +26,9 @@ return [
                 ],
             ],
         ],
+        'notices' => [
+            'class' => 'fecshop\services\Notices',
+        ],
     ],
     'modules' => [
         'customer' => [

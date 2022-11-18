@@ -10,6 +10,7 @@
 namespace fecshop\app\appserver\modules\Customer\controllers;
 
 use fecshop\app\appserver\modules\AppserverController;
+use fecshop\models\mysqldb\Customer;
 use Yii;
 use \Firebase\JWT\JWT;
 
@@ -77,11 +78,12 @@ class LoginController extends AppserverController
             }
         }
         $accessToken = Yii::$service->customer->loginAndGetAccessToken($email,$password);
-        if($accessToken){
+        if( $accessToken && $accessToken["token"] ){
             $code = Yii::$service->helper->appserver->status_success;
-            $data = ["access-token" => $accessToken];
+            $data = ["access-token" => $accessToken["token"]];
+            Yii::$app->cache->set( $accessToken["token"] , $accessToken["id"]  );
             $responseData = Yii::$service->helper->appserver->getResponseData($code, $data);
-            
+
             return $responseData;
         }else{
             
